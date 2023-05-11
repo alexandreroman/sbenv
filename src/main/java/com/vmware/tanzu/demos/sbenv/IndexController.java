@@ -16,6 +16,7 @@
 
 package com.vmware.tanzu.demos.sbenv;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,9 +25,18 @@ import java.util.TreeMap;
 
 @RestController
 public class IndexController {
-    @GetMapping("/")
-    Map<String, String> index() {
+    @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+    Map<String, String> indexJson() {
         // Get environment variables sorted by key.
         return new TreeMap<>(System.getenv());
+    }
+
+    @GetMapping(value = "/", produces = MediaType.TEXT_PLAIN_VALUE)
+    StringBuilder indexPlainText() {
+        // Build a String containing environment variables sorted by key.
+        final var sb = new StringBuilder(1024);
+        final var env = new TreeMap<>(System.getenv());
+        env.forEach((key, value) -> sb.append(key).append("=").append(value).append("\n"));
+        return sb;
     }
 }

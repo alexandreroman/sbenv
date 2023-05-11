@@ -31,8 +31,14 @@ public class IndexControllerTests {
     private TestRestTemplate client;
 
     @Test
-    void testIndex() {
+    void testIndexJson() {
         final var env = client.getForObject("/", Map.class);
+        assertThat(env.isEmpty()).isFalse();
+    }
+
+    @Test
+    void testIndexPlainText() {
+        final var env = client.getForObject("/", String.class);
         assertThat(env.isEmpty()).isFalse();
     }
 }
