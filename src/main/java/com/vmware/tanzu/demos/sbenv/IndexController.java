@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 @RestController
-public class IndexController {
+class IndexController {
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     Map<String, String> indexJson() {
         // Get environment variables sorted by key.
